@@ -1,8 +1,7 @@
 <!-- Chosen Palette: Warm Neutrals with Subtle Blue and Green Accents -->
-<!-- Application Structure Plan: The SPA is designed as a single-page interactive report, structured into four thematic sections: a Trip Dashboard for a high-level overview, an Accommodation section for a detailed comparison of properties, a Travel section for logistics, and a Food & Drink section for local recommendations. This structure was chosen to guide the user through the planning process logically, from broad decisions (stay vs. travel) to specific details (which Airbnb, which restaurant). The design prioritizes a clean, easily scannable layout using a grid-based approach. Key interactions include a dynamic radar chart for property comparison and a filterable grid for local recommendations, allowing users to actively explore and synthesize information rather than just passively reading a static report. The fixed header provides persistent navigation. -->
-<!-- Visualization & Content Choices: Dashboard Section -> Goal: Summarize key trip stats & provide an at-a-glance comparison. Method: Use key metric cards for stats. Use a Chart.js Radar Chart for Airbnb comparison. Interaction: The chart is a visual summary of the detailed data table below. Justification: This provides a quick visual impact and "wow" factor, allowing for rapid comparison of multiple criteria. The radar chart is an excellent way to visualize multi-dimensional data. Library: Chart.js for the radar chart.
-Accommodation Section -> Goal: Present detailed comparison data. Method: Use a responsive HTML table. Interaction: The table is pre-sorted by the combined ranking, providing a clear recommendation. Links on property names facilitate further exploration. Justification: A table is the most effective way to present structured, comparable data points clearly. The sorting helps users immediately identify the top-ranked option.
-Travel Section -> Goal: Explain pros and cons of travel options. Method: Use two side-by-side descriptive text blocks with bullet points. Interaction: No complex interaction is needed; the goal is clear, concise information transfer. Justification: This format is ideal for direct comparisons of qualitative information.
+<!-- Application Structure Plan: The SPA is designed as a single-page interactive report, structured into three thematic sections: a Trip Dashboard for a high-level overview, a Travel section for logistics, and a Food & Drink section for local recommendations. This structure was chosen to guide the user through the planning process logically, from broad decisions (stay vs. travel) to specific details (which Airbnb, which restaurant). The design prioritizes a clean, easily scannable layout using a grid-based approach. The fixed header provides persistent navigation. -->
+<!-- Visualization & Content Choices: Dashboard Section -> Goal: Summarize key trip stats & provide an at-a-glance comparison. Method: Use key metric cards for stats. Interaction: No complex interaction is needed; the goal is clear, concise information transfer. Justification: This provides a quick visual impact and "wow" factor, allowing for rapid comparison of multiple criteria.
+Travel Section -> Goal: Explain pros and cons of travel options. Method: Use descriptive text blocks with bullet points. Interaction: No complex interaction is needed; the goal is clear, concise information transfer. Justification: This format is ideal for direct comparisons of qualitative information.
 Food Section -> Goal: Provide an interactive list of local spots. Method: Use a filterable grid of cards. Interaction: Filter buttons allow users to dynamically change the content of the grid, showing only Restaurants, Bars, or Breweries. Justification: This makes a long list of recommendations easily digestible and user-driven. -->
 <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 <!DOCTYPE html>
@@ -19,20 +18,6 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8f9fa;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
-            }
         }
         .nav-link {
             transition: color 0.3s, border-bottom-color 0.3s;
@@ -54,6 +39,10 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
         .stat-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        a[href^="http"]:not([class*="hover:"]),
+        a[href^="https:"]:not([class*="hover:"]) {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -102,14 +91,6 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-xl shadow-lg">
-                <h3 class="text-2xl font-bold text-center mb-2">Airbnb Options at a Glance</h3>
-                <p class="text-center text-gray-600 max-w-xl mx-auto mb-6">This chart compares the five potential Airbnbs based on key criteria. A larger shape indicates a better overall ranking.</p>
-                <div class="chart-container">
-                    <canvas id="airbnbRadarChart"></canvas>
-                </div>
-            </div>
-
             <div class="mt-12 bg-white p-6 rounded-xl shadow-lg">
                 <h3 class="text-2xl font-bold text-center mb-6">Why Stay in Kelowna? Pros & Cons</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -134,27 +115,53 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
                 </div>
             </div>
         </section>
-
+        
         <section id="accommodation" class="pt-24">
-            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Accommodation Deep Dive</h2>
-            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Here's a detailed comparison of five potential 5-bedroom Airbnbs available from January 14-18, 2026. Rankings are from 1 (worst) to 5 (best) for each category. The highest combined score is the top recommendation.</p>
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Your Accommodation</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">You have decided on the **Downtown Lakefront Penthouse**. Here are the key details for your reservation to keep everyone on the same page.</p>
 
-            <div class="bg-white p-6 rounded-xl shadow-lg overflow-x-auto">
-                 <table class="w-full text-left table-auto">
-                    <thead>
-                        <tr class="bg-gray-100 text-gray-700">
-                            <th class="p-4 font-semibold">Property</th>
-                            <th class="p-4 font-semibold">Downtown Access</th>
-                            <th class="p-4 font-semibold">Big White Proximity</th>
-                            <th class="p-4 font-semibold">Reviews</th>
-                            <th class="p-4 font-semibold">Cost (4 nights)</th>
-                            <th class="p-4 font-semibold">Cost (per person)</th>
-                            <th class="p-4 font-semibold text-blue-800">Combined Rank</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y" id="airbnb-table-body">
-                    </tbody>
-                </table>
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold text-blue-800">
+                            <a href="https://www.airbnb.ca/rooms/47566614?adults=6&check_in=2026-01-14&check_out=2026-01-18&guests=7&search_mode=regular_search&source_impression_id=p3_1758334023_P3QRHveX8UKVHIBt&previous_page_section_name=1000&federated_search_id=923eb79b-ff93-41f8-836e-3dbc69f106ac" target="_blank">Downtown Lakefront Penthouse</a>
+                        </h3>
+                        <p class="text-gray-700">This condo features four bedrooms and can sleep up to 10 guests. It includes access to a communal pool and a hot tub, and is located in a prime downtown spot.</p>
+                        
+                        <div class="space-y-2 text-gray-600">
+                            <p><span class="font-semibold text-gray-800">Total Cost:</span> $2,884.75</p>
+                            <p><span class="font-semibold text-gray-800">Cost Per Person:</span> $480.79 (assuming 6 people)</p>
+                            <p><span class="font-semibold text-gray-800">Bedrooms:</span> 4</p>
+                            <p><span class="font-semibold text-gray-800">Guests:</span> 6-10</p>
+                            <p><span class="font-semibold text-gray-800">Address:</span> <a href="https://www.google.com/maps/search/?api=1&query=1088%20Sunset%20Dr,%20Kelowna,%20BC%20V1Y%209W7" target="_blank">1088 Sunset Dr, Kelowna, BC V1Y 9W7</a></p>
+                            <p><span class="font-semibold text-gray-800">Check-in:</span> 4:00 PM</p>
+                            <p><span class="font-semibold text-gray-800">Check-out:</span> 10:00 AM</p>
+                        </div>
+                    </div>
+                     <div class="flex justify-center">
+                        <img src="https://placehold.co/400x300/f8f9fa/34495e?text=Downtown+Lakefront+Condo" alt="A lakefront condo with a pool and hot tub." class="rounded-lg shadow-md max-w-full h-auto">
+                    </div>
+                </div>
+                <div class="mt-8 text-center">
+                    <h4 class="text-xl font-bold mb-4 text-blue-800">Condo Photos</h4>
+                    <p class="text-gray-600 max-w-lg mx-auto mb-4">You can view photos of the property using the gallery below.</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        <img src="0.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="1.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="2.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="3.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="4.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="5.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="6.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="7.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="8.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="9.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="10.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="11.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="12.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="13.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -186,7 +193,7 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
                         </div>
                         <div>
                             <h4 class="text-lg font-bold text-gray-800">Cost</h4>
-                            <p class="text-gray-600">$695 for the trip</p>
+                            <p class="text-gray-600">$695 for the week</p>
                         </div>
                         <div>
                             <h4 class="text-lg font-bold text-gray-800">Cost (per person)</h4>
@@ -194,7 +201,7 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
                         </div>
                         <div>
                             <h4 class="text-lg font-bold text-gray-800">Confirmation No.</h4>
-                            <p class="text-gray-600">Enterprise Rent-A-Car CA854644330</p>
+                            <p class="text-gray-600">CA854644330</p>
                         </div>
                     </div>
                 </div>
@@ -212,14 +219,14 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
                                 <p class="text-gray-600">Cheapest round-trip cost: <span class="font-bold">~$142 CAD</span></p>
                                 <p class="text-gray-600">**Outbound:** Morning departure on Jan 14, 2026. <br> **Return:** Afternoon departure on Jan 18, 2026.</p>
                                 <p class="text-gray-600 italic">Direct flights are widely available and take approximately 1 hour and 17 minutes.</p>
-                                <a href="https://www.westjet.com/en-ca/flights/calgary-to-kelowna" target="_blank" class="text-blue-600 hover:underline">Search WestJet for Flights</a>
+                                <a href="https://www.westjet.com/en-ca/flights/calgary-to-kelowna" target="_blank">Search WestJet for Flights</a>
                             </div>
                             <div class="border-t pt-4">
                                 <h5 class="font-semibold">Air Canada Direct Flight</h5>
                                 <p class="text-gray-600">Cheapest round-trip cost: <span class="font-bold">~$192 CAD</span></p>
                                 <p class="text-gray-600">**Outbound:** Morning departure on Jan 14, 2026. <br> **Return:** Afternoon departure on Jan 18, 2026.</p>
                                 <p class="text-gray-600 italic">Direct flights are widely available and take approximately 1 hour and 15 minutes.</p>
-                                <a href="https://www.aircanada.com/en-ca/flights-from-calgary-to-kelowna" target="_blank" class="text-blue-600 hover:underline">Search Air Canada for Flights</a>
+                                <a href="https://www.aircanada.com/en-ca/flights-from-calgary-to-kelowna" target="_blank">Search Air Canada for Flights</a>
                             </div>
                         </div>
                     </div>
@@ -231,14 +238,14 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
                                 <p class="text-gray-600">Cheapest round-trip cost: <span class="font-bold">~$260 CAD</span></p>
                                 <p class="text-gray-600">**Outbound:** Afternoon departure on Jan 14, 2026. <br> **Return:** Afternoon departure on Jan 18, 2026.</p>
                                 <p class="text-gray-600 italic">Direct flights are available and take approximately 4 hours and 45 minutes.</p>
-                                <a href="https://www.westjet.com/en-ca/flights/toronto-to-kelowna" target="_blank" class="text-blue-600 hover:underline">Search WestJet for Flights</a>
+                                <a href="https://www.westjet.com/en-ca/flights/toronto-to-kelowna" target="_blank">Search WestJet for Flights</a>
                             </div>
                             <div class="border-t pt-4">
                                 <h5 class="font-semibold">Air Canada Direct Flight</h5>
                                 <p class="text-gray-600">Cheapest round-trip cost: <span class="font-bold">~$295 CAD</span></p>
                                 <p class="text-gray-600">**Outbound:** Afternoon departure on Jan 14, 2026. <br> **Return:** Afternoon departure on Jan 18, 2026.</p>
                                 <p class="text-gray-600 italic">Direct flights are available and take approximately 4 hours and 45 minutes.</p>
-                                <a href="https://www.aircanada.com/en-ca/flights/toronto-to-kelowna" target="_blank" class="text-blue-600 hover:underline">Search Air Canada for Flights</a>
+                                <a href="https://www.aircanada.com/en-ca/flights/toronto-to-kelowna" target="_blank">Search Air Canada for Flights</a>
                             </div>
                         </div>
                     </div>
@@ -335,64 +342,6 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
-        const airbnbData = [
-            {
-                name: "Beautiful home with backyard oasis",
-                downtownRank: 1,
-                proximityRank: 5,
-                reviewsRank: 2,
-                costRank: 5,
-                cost: "$3,600",
-                reviewScore: "4.85/5",
-                combined: 1 + 5 + 2 + (5 * 2),
-                url: "https://www.airbnb.ca/rooms/596534843060210794?source_impression_id=p3_1758334402_P3wp0fVZYJT0st72"
-            },
-            {
-                name: "Urban Charm - Downtown Kelowna",
-                downtownRank: 5,
-                proximityRank: 2,
-                reviewsRank: 1,
-                costRank: 4,
-                cost: "$4,200",
-                reviewScore: "4.75/5",
-                combined: 5 + 2 + 1 + (4 * 2),
-                url: "https://www.airbnb.ca/rooms/1135067163033944294?adults=7&check_in=2026-01-14&check_out=2026-01-18&search_mode=regular_search&source_impression_id=p3_1758330539_P3HICk94ko3SDwpe&previous_page_section_name=1000&federated_search_id=49f6023d-3cd0-4720-8c32-46cb81baf250"
-            },
-            {
-                name: "Luxury Townhome in Downtown Kelowna",
-                downtownRank: 4,
-                proximityRank: 3,
-                reviewsRank: 4,
-                costRank: 3,
-                cost: "$4,700",
-                reviewScore: "4.92/5",
-                combined: 4 + 3 + 4 + (3 * 2),
-                url: "https://www.airbnb.ca/rooms/48169888?source_impression_id=p3_1758334434_P3SkZwggrKaQaJXX"
-            },
-            {
-                name: "The Luxe Loft",
-                downtownRank: 3,
-                proximityRank: 4,
-                reviewsRank: 5,
-                costRank: 1,
-                cost: "$4,900",
-                reviewScore: "4.98/5",
-                combined: 3 + 4 + 5 + (1 * 2),
-                url: "https://www.airbnb.ca/rooms/1441481680540830071?adults=6&check_in=2026-01-14&check_out=2026-01-18&guests=7&search_mode=regular_search&source_impression_id=p3_1758333220_P3JYtl9FrJh42dWj&previous_page_section_name=1000&federated_search_id=f1e70e23-381a-46c3-a815-20bebf9a1750"
-            },
-            {
-                name: "Downtown Lakefront Condo",
-                downtownRank: 2,
-                proximityRank: 1,
-                reviewsRank: 3,
-                costRank: 2,
-                cost: "$4,850",
-                reviewScore: "4.90/5",
-                combined: 2 + 1 + 3 + (2 * 2),
-                url: "https://www.airbnb.ca/rooms/47566614?adults=6&check_in=2026-01-14&check_out=2026-01-18&guests=7&search_mode=regular_search&source_impression_id=p3_1758334023_P3QRHveX8UKVHIBt&previous_page_section_name=1000&federated_search_id=923eb79b-ff93-41f8-836e-3dbc69f106ac"
-            }
-        ];
-
         const foodData = [
             { name: "RauDZ Regional Table", type: "restaurant", description: "Upscale farm-to-table dining. A bit pricey but fantastic food and cocktails. Great for a celebratory dinner.", url: "https://www.raudz.com/" },
             { name: "BNA Brewing Co. & Eatery", type: "brewery", description: "Massive, lively brewery with an attached bowling alley. Great beer, solid food menu, and a fun atmosphere for a large group.", url: "https://www.bnabrewing.com/" },
@@ -407,105 +356,6 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
             { name: "Cactus Club Cafe", type: "restaurant", description: "A well-known Canadian chain offering a diverse menu, from burgers to fine dining. Great for a consistent, crowd-pleasing meal.", url: "https://www.cactusclubcafe.com/" },
             { name: "King Taps", type: "restaurant", description: "A vibrant restaurant with a huge selection of beer taps and a varied food menu, from pizza to steak. Lively and great for groups.", url: "https://www.kingtaps.com/" }
         ];
-
-
-        function populateAirbnbTable() {
-            const tableBody = document.getElementById('airbnb-table-body');
-            airbnbData.sort((a,b) => b.combined - a.combined).forEach(property => {
-                const costNumber = parseFloat(property.cost.replace('$', '').replace(',', ''));
-                const costPerPerson = (costNumber / 6).toFixed(2);
-                
-                const row = document.createElement('tr');
-                row.className = 'hover:bg-gray-50';
-                row.innerHTML = `
-                    <td class="p-4">
-                        <a href="${property.url}" target="_blank" class="font-bold text-blue-600 hover:underline">${property.name}</a>
-                        <div class="text-sm text-gray-500">${property.reviewScore}</div>
-                    </td>
-                    <td class="p-4 text-center">${property.downtownRank}</td>
-                    <td class="p-4 text-center">${property.proximityRank}</td>
-                    <td class="p-4 text-center">${property.reviewsRank}</td>
-                    <td class="p-4 text-center">${property.cost} (Rank: ${property.costRank})</td>
-                    <td class="p-4 text-center text-lg font-semibold">$${costPerPerson}</td>
-                    <td class="p-4 text-center text-xl font-bold text-blue-800">${property.combined}</td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
-
-        function createRadarChart() {
-            const ctx = document.getElementById('airbnbRadarChart').getContext('2d');
-            const datasets = airbnbData.map((property, index) => {
-                const colors = [
-                    { bg: 'rgba(59, 130, 246, 0.2)', border: 'rgba(59, 130, 246, 1)' },
-                    { bg: 'rgba(16, 185, 129, 0.2)', border: 'rgba(16, 185, 129, 1)' },
-                    { bg: 'rgba(239, 68, 68, 0.2)', border: 'rgba(239, 68, 68, 1)' },
-                    { bg: 'rgba(249, 115, 22, 0.2)', border: 'rgba(249, 115, 22, 1)' },
-                    { bg: 'rgba(147, 51, 234, 0.2)', border: 'rgba(147, 51, 234, 1)' }
-                ];
-                return {
-                    label: property.name,
-                    data: [property.costRank, property.proximityRank, property.downtownRank, property.reviewsRank],
-                    backgroundColor: colors[index].bg,
-                    borderColor: colors[index].border,
-                    borderWidth: 2,
-                    pointBackgroundColor: colors[index].border,
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: colors[index].border
-                };
-            });
-
-            new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Cost (Higher is Better)', 'Proximity to Big White', 'Downtown Access', 'Reviews'],
-                    datasets: datasets
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            beginAtZero: true,
-                            max: 5,
-                            min: 0,
-                            ticks: {
-                               stepSize: 1,
-                               display: false
-                            },
-                            pointLabels: {
-                                font: {
-                                    size: 12
-                                }
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            },
-                            angleLines: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    label += `Rank ${context.raw}`;
-                                    return label;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
 
         function populateFoodGrid(filter = 'all') {
             const grid = document.getElementById('food-grid');
@@ -526,7 +376,7 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
                 card.innerHTML = `
                     <div class="flex justify-between items-start">
                         <h4 class="text-xl font-bold mb-2">
-                            <a href="${item.url}" target="_blank" class="hover:underline">${item.name}</a>
+                            <a href="${item.url}" target="_blank">${item.name}</a>
                         </h4>
                         <span class="text-xs font-semibold px-2 py-1 rounded-full ${typeColor}">${item.type.charAt(0).toUpperCase() + item.type.slice(1).replace('-', ' ')}</span>
                     </div>
@@ -571,8 +421,6 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
             window.location.hash = this.value;
         });
 
-        populateAirbnbTable();
-        createRadarChart();
         populateFoodGrid();
     });
     </script>
