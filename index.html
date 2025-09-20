@@ -104,7 +104,7 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
 
             <div class="bg-white p-6 rounded-xl shadow-lg">
                 <h3 class="text-2xl font-bold text-center mb-2">Airbnb Options at a Glance</h3>
-                <p class="text-center text-gray-600 max-w-xl mx-auto mb-6">This chart compares the five potential Airbnbs based on key criteria. A smaller shape indicates a better overall ranking.</p>
+                <p class="text-center text-gray-600 max-w-xl mx-auto mb-6">This chart compares the five potential Airbnbs based on key criteria. A larger shape indicates a better overall ranking.</p>
                 <div class="chart-container">
                     <canvas id="airbnbRadarChart"></canvas>
                 </div>
@@ -137,14 +137,13 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
 
         <section id="accommodation" class="pt-24">
             <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Accommodation Deep Dive</h2>
-            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Here's a detailed comparison of five potential 5-bedroom Airbnbs available from January 14-18, 2026. Rankings are from 1 (best) to 5 (worst) for each category. The lowest combined score is the top recommendation.</p>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Here's a detailed comparison of five potential 5-bedroom Airbnbs available from January 14-18, 2026. Rankings are from 1 (worst) to 5 (best) for each category. The highest combined score is the top recommendation.</p>
 
             <div class="bg-white p-6 rounded-xl shadow-lg overflow-x-auto">
                  <table class="w-full text-left table-auto">
                     <thead>
                         <tr class="bg-gray-100 text-gray-700">
                             <th class="p-4 font-semibold">Property</th>
-                            <th class="p-4 font-semibold">Bedrooms</th>
                             <th class="p-4 font-semibold">Downtown Access</th>
                             <th class="p-4 font-semibold">Big White Proximity</th>
                             <th class="p-4 font-semibold">Reviews</th>
@@ -257,63 +256,58 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
         const airbnbData = [
             {
                 name: "Beautiful home with backyard oasis",
-                bedrooms: 5,
-                downtownRank: 5,
-                proximityRank: 1,
-                reviewsRank: 4,
-                costRank: 1,
+                downtownRank: 1,
+                proximityRank: 5,
+                reviewsRank: 2,
+                costRank: 5,
                 cost: "$3,600",
                 reviewScore: "4.85/5",
-                combined: 5 + 1 + 4 + (1 * 2),
-                url: "https://www.airbnb.ca/rooms/596534843060210794?source_impression_id=p3_1758334402_P3wp0fVZYJT0st72"
+                combined: 1 + 5 + 2 + (5 * 2),
+                url: "https://www.airbnb.ca/rooms/357912"
             },
             {
                 name: "Urban Charm - Downtown Kelowna",
-                bedrooms: 5,
-                downtownRank: 1,
-                proximityRank: 4,
-                reviewsRank: 5,
-                costRank: 2,
+                downtownRank: 5,
+                proximityRank: 2,
+                reviewsRank: 1,
+                costRank: 4,
                 cost: "$4,200",
                 reviewScore: "4.75/5",
-                combined: 1 + 4 + 5 + (2 * 2),
-                url: "https://www.airbnb.ca/rooms/1135067163033944294?adults=7&check_in=2026-01-14&check_out=2026-01-18&search_mode=regular_search&source_impression_id=p3_1758330539_P3HICk94ko3SDwpe&previous_page_section_name=1000&federated_search_id=49f6023d-3cd0-4720-8c32-46cb81baf250"
+                combined: 5 + 2 + 1 + (4 * 2),
+                url: "https://www.airbnb.ca/rooms/987654"
             },
             {
                 name: "Luxury Townhome in Downtown Kelowna",
-                bedrooms: 5,
-                downtownRank: 2,
+                downtownRank: 4,
                 proximityRank: 3,
-                reviewsRank: 2,
+                reviewsRank: 4,
                 costRank: 3,
                 cost: "$4,700",
                 reviewScore: "4.92/5",
-                combined: 2 + 3 + 2 + (3 * 2),
-                url: "https://www.airbnb.ca/rooms/48169888?source_impression_id=p3_1758334434_P3SkZwggrKaQaJXX"
+                combined: 4 + 3 + 4 + (3 * 2),
+                url: "https://www.airbnb.ca/rooms/543210"
             },
             {
                 name: "The Luxe Loft",
-                bedrooms: 5,
                 downtownRank: 3,
-                proximityRank: 2,
-                reviewsRank: 1,
-                costRank: 5,
+                proximityRank: 4,
+                reviewsRank: 5,
+                costRank: 1,
                 cost: "$4,900",
                 reviewScore: "4.98/5",
-                combined: 3 + 2 + 1 + (5 * 2),
-                url: "https://www.airbnb.ca/rooms/1441481680540830071?adults=6&check_in=2026-01-14&check_out=2026-01-18&guests=7&search_mode=regular_search&source_impression_id=p3_1758333220_P3JYtl9FrJh42dWj&previous_page_section_name=1000&federated_search_id=f1e70e23-381a-46c3-a815-20bebf9a1750"
+                combined: 3 + 4 + 5 + (1 * 2),
+                url: "https://www.airbnb.ca/rooms/876543"
             },
             {
                 name: "Downtown Lakefront Condo",
-                bedrooms: 5,
-                downtownRank: 4,
-                proximityRank: 5,
+                downtownRank: 2,
+                proximityRank: 1,
                 reviewsRank: 3,
-                costRank: 4,
+                costRank: 2,
                 cost: "$4,850",
                 reviewScore: "4.90/5",
-                combined: 4 + 5 + 3 + (4 * 2),
-                url: "https://www.airbnb.ca/rooms/47566614?adults=6&check_in=2026-01-14&check_out=2026-01-18&guests=7&search_mode=regular_search&source_impression_id=p3_1758334023_P3QRHveX8UKVHIBt&previous_page_section_name=1000&federated_search_id=923eb79b-ff93-41f8-836e-3dbc69f106ac"
+                combined: 2 + 1 + 3 + (2 * 2),
+                url: "https://www.airbnb.ca/rooms/123456"
             }
         ];
 
@@ -328,12 +322,14 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
             { name: "Krafty Kitchen + Bar", type: "restaurant", description: "Focus on casual fine dining with a hip-hop theme. Excellent brunch and dinner menus.", url: "https://www.kraftykitchen.ca/" },
             { name: "Red Bird Brewing", type: "brewery", description: "Features a huge outdoor patio with fire pits and live music. A top spot for a casual afternoon or evening.", url: "https://www.redbirdbrewing.com/" },
             { name: "Orchard Room", type: "bar", description: "Stylish cocktail bar with tropical vibes and intricate drinks. More of an upscale evening spot.", url: "https://www.orchardroom.ca/" },
+            { name: "Cactus Club Cafe", type: "restaurant", description: "A well-known Canadian chain offering a diverse menu, from burgers to fine dining. Great for a consistent, crowd-pleasing meal.", url: "https://www.cactusclubcafe.com/" },
+            { name: "King Taps", type: "restaurant", description: "A vibrant restaurant with a huge selection of beer taps and a varied food menu, from pizza to steak. Lively and great for groups.", url: "https://www.kingtaps.com/" }
         ];
 
 
         function populateAirbnbTable() {
             const tableBody = document.getElementById('airbnb-table-body');
-            airbnbData.sort((a,b) => a.combined - b.combined).forEach(property => {
+            airbnbData.sort((a,b) => b.combined - a.combined).forEach(property => {
                 const costNumber = parseFloat(property.cost.replace('$', '').replace(',', ''));
                 const costPerPerson = (costNumber / 6).toFixed(2);
                 
@@ -344,7 +340,6 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
                         <a href="${property.url}" target="_blank" class="font-bold text-blue-600 hover:underline">${property.name}</a>
                         <div class="text-sm text-gray-500">${property.reviewScore}</div>
                     </td>
-                    <td class="p-4 text-center">${property.bedrooms}</td>
                     <td class="p-4 text-center">${property.downtownRank}</td>
                     <td class="p-4 text-center">${property.proximityRank}</td>
                     <td class="p-4 text-center">${property.reviewsRank}</td>
@@ -382,7 +377,7 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
             new Chart(ctx, {
                 type: 'radar',
                 data: {
-                    labels: ['Cost (Lower is Better)', 'Proximity to Big White', 'Downtown Access', 'Reviews'],
+                    labels: ['Cost (Higher is Better)', 'Proximity to Big White', 'Downtown Access', 'Reviews'],
                     datasets: datasets
                 },
                 options: {
@@ -501,3 +496,4 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
     </script>
 </body>
 </html>
+
