@@ -149,6 +149,7 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
                             <th class="p-4 font-semibold">Big White Proximity</th>
                             <th class="p-4 font-semibold">Reviews</th>
                             <th class="p-4 font-semibold">Cost (4 nights)</th>
+                            <th class="p-4 font-semibold">Cost (per person)</th>
                             <th class="p-4 font-semibold text-blue-800">Combined Rank</th>
                         </tr>
                     </thead>
@@ -237,6 +238,7 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
                 <button class="filter-btn bg-white text-gray-700 py-2 px-4 rounded-full border" data-filter="restaurant">Restaurants</button>
                 <button class="filter-btn bg-white text-gray-700 py-2 px-4 rounded-full border" data-filter="brewery">Breweries</button>
                 <button class="filter-btn bg-white text-gray-700 py-2 px-4 rounded-full border" data-filter="bar">Bars</button>
+                <button class="filter-btn bg-white text-gray-700 py-2 px-4 rounded-full border" data-filter="dancing-entertainers">Dancing Entertainers</button>
             </div>
             <div id="food-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             </div>
@@ -316,22 +318,25 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
         ];
 
         const foodData = [
-            { name: "RauDZ Regional Table", type: "restaurant", description: "Upscale farm-to-table dining. A bit pricey but fantastic food and cocktails. Great for a celebratory dinner." },
-            { name: "BNA Brewing Co. & Eatery", type: "brewery", description: "Massive, lively brewery with an attached bowling alley. Great beer, solid food menu, and a fun atmosphere for a large group." },
-            { name: "Micro Bar & Bites", type: "bar", description: "Tiny, popular tapas bar with Spanish-inspired dishes and great cocktails. Might be tight for 7, but worth it." },
-            { name: "Liquid Zoo", type: "bar", description: "A popular nightclub and bar in downtown Kelowna known for its energetic party atmosphere. A late-night option for the group." },
-            { name: "Central Kitchen + Bar", type: "restaurant", description: "Modern, bustling spot with a diverse menu of elevated comfort food. Good for groups, takes reservations." },
-            { name: "Kettle River Brewing Co.", type: "brewery", description: "Smaller, more relaxed brewery with a focus on creative beers. Often has a food truck on-site." },
-            { name: "The Train Station Pub", type: "restaurant", description: "Classic pub fare in a historic building. Reliable food, good beer selection, and can easily accommodate groups." },
-            { name: "Krafty Kitchen + Bar", type: "restaurant", description: "Focus on casual fine dining with a hip-hop theme. Excellent brunch and dinner menus." },
-            { name: "Red Bird Brewing", type: "brewery", description: "Features a huge outdoor patio with fire pits and live music. A top spot for a casual afternoon or evening." },
-            { name: "Orchard Room", type: "bar", description: "Stylish cocktail bar with tropical vibes and intricate drinks. More of an upscale evening spot." },
+            { name: "RauDZ Regional Table", type: "restaurant", description: "Upscale farm-to-table dining. A bit pricey but fantastic food and cocktails. Great for a celebratory dinner.", url: "https://www.raudz.com/" },
+            { name: "BNA Brewing Co. & Eatery", type: "brewery", description: "Massive, lively brewery with an attached bowling alley. Great beer, solid food menu, and a fun atmosphere for a large group.", url: "https://www.bnabrewing.com/" },
+            { name: "Micro Bar & Bites", type: "bar", description: "Tiny, popular tapas bar with Spanish-inspired dishes and great cocktails. Might be tight for 7, but worth it.", url: "https://microkelowna.com/" },
+            { name: "Liquid Zoo", type: "dancing-entertainers", description: "A popular nightclub and bar with live entertainment and DJs. A late-night option for the group.", url: "https://theliquidzoo.com/" },
+            { name: "Central Kitchen + Bar", type: "restaurant", description: "Modern, bustling spot with a diverse menu of elevated comfort food. Good for groups, takes reservations.", url: "https://centralkelowna.com/" },
+            { name: "Kettle River Brewing Co.", type: "brewery", description: "Smaller, more relaxed brewery with a focus on creative beers. Often has a food truck on-site.", url: "https://www.kettleriverbrewing.ca/" },
+            { name: "The Train Station Pub", type: "restaurant", description: "Classic pub fare in a historic building. Reliable food, good beer selection, and can easily accommodate groups.", url: "https://thetrainstationpub.com/" },
+            { name: "Krafty Kitchen + Bar", type: "restaurant", description: "Focus on casual fine dining with a hip-hop theme. Excellent brunch and dinner menus.", url: "https://www.kraftykitchen.ca/" },
+            { name: "Red Bird Brewing", type: "brewery", description: "Features a huge outdoor patio with fire pits and live music. A top spot for a casual afternoon or evening.", url: "https://www.redbirdbrewing.com/" },
+            { name: "Orchard Room", type: "bar", description: "Stylish cocktail bar with tropical vibes and intricate drinks. More of an upscale evening spot.", url: "https://www.orchardroom.ca/" },
         ];
 
 
         function populateAirbnbTable() {
             const tableBody = document.getElementById('airbnb-table-body');
             airbnbData.sort((a,b) => a.combined - b.combined).forEach(property => {
+                const costNumber = parseFloat(property.cost.replace('$', '').replace(',', ''));
+                const costPerPerson = (costNumber / 6).toFixed(2);
+                
                 const row = document.createElement('tr');
                 row.className = 'hover:bg-gray-50';
                 row.innerHTML = `
@@ -344,6 +349,7 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
                     <td class="p-4 text-center">${property.proximityRank}</td>
                     <td class="p-4 text-center">${property.reviewsRank}</td>
                     <td class="p-4 text-center">${property.cost} (Rank: ${property.costRank})</td>
+                    <td class="p-4 text-center text-lg font-semibold">$${costPerPerson}</td>
                     <td class="p-4 text-center text-xl font-bold text-blue-800">${property.combined}</td>
                 `;
                 tableBody.appendChild(row);
@@ -436,13 +442,16 @@ Food Section -> Goal: Provide an interactive list of local spots. Method: Use a 
                     case 'restaurant': typeColor = 'bg-green-100 text-green-800'; break;
                     case 'brewery': typeColor = 'bg-yellow-100 text-yellow-800'; break;
                     case 'bar': typeColor = 'bg-purple-100 text-purple-800'; break;
+                    case 'dancing-entertainers': typeColor = 'bg-red-100 text-red-800'; break;
                 }
 
                 card.className = 'food-card bg-white p-6 rounded-xl shadow-lg transition-transform transform hover:-translate-y-1';
                 card.innerHTML = `
                     <div class="flex justify-between items-start">
-                        <h4 class="text-xl font-bold mb-2">${item.name}</h4>
-                        <span class="text-xs font-semibold px-2 py-1 rounded-full ${typeColor}">${item.type.charAt(0).toUpperCase() + item.type.slice(1)}</span>
+                        <h4 class="text-xl font-bold mb-2">
+                            <a href="${item.url}" target="_blank" class="hover:underline">${item.name}</a>
+                        </h4>
+                        <span class="text-xs font-semibold px-2 py-1 rounded-full ${typeColor}">${item.type.charAt(0).toUpperCase() + item.type.slice(1).replace('-', ' ')}</span>
                     </div>
                     <p class="text-gray-600">${item.description}</p>
                 `;
