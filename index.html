@@ -1,3 +1,10 @@
+<!-- Chosen Palette: Warm Neutrals with Subtle Blue and Green Accents -->
+<!-- Application Structure Plan: The SPA is designed as a single-page interactive report, structured into four thematic sections: a Trip Dashboard for a high-level overview, an Accommodation section for a detailed comparison of properties, a Travel section for logistics, and a Food & Drink section for local recommendations. This structure was chosen to guide the user through the planning process logically, from broad decisions (stay vs. travel) to specific details (which Airbnb, which restaurant). The design prioritizes a clean, easily scannable layout using a grid-based approach. Key interactions include a dynamic radar chart for property comparison and a filterable grid for local recommendations, allowing users to actively explore and synthesize information rather than just passively reading a static report. The fixed header provides persistent navigation. -->
+<!-- Visualization & Content Choices: Dashboard Section -> Goal: Summarize key trip stats & provide an at-a-glance comparison. Method: Use key metric cards for stats. Use a Chart.js Radar Chart for Airbnb comparison. Interaction: The chart is a visual summary of the detailed data table below. Justification: This provides a quick visual impact and "wow" factor, allowing for rapid comparison of multiple criteria. The radar chart is an excellent way to visualize multi-dimensional data. Library: Chart.js for the radar chart.
+Accommodation Section -> Goal: Present detailed comparison data. Method: Use a responsive HTML table. Interaction: The table is pre-sorted by the combined ranking, providing a clear recommendation. Links on property names facilitate further exploration. Justification: A table is the most effective way to present structured, comparable data points clearly. The sorting helps users immediately identify the top-ranked option.
+Travel Section -> Goal: Explain pros and cons of travel options. Method: Use two side-by-side descriptive text blocks with bullet points. Interaction: No complex interaction is needed; the goal is clear, concise information transfer. Justification: This format is ideal for direct comparisons of qualitative information.
+Food Section -> Goal: Provide an interactive list of local spots. Method: Use a filterable grid of cards. Interaction: Filter buttons allow users to dynamically change the content of the grid, showing only Restaurants, Bars, or Breweries. Justification: This makes a long list of recommendations easily digestible and user-driven. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -137,6 +144,7 @@
                     <thead>
                         <tr class="bg-gray-100 text-gray-700">
                             <th class="p-4 font-semibold">Property</th>
+                            <th class="p-4 font-semibold">Bedrooms</th>
                             <th class="p-4 font-semibold">Downtown Access</th>
                             <th class="p-4 font-semibold">Big White Proximity</th>
                             <th class="p-4 font-semibold">Reviews</th>
@@ -247,6 +255,7 @@
         const airbnbData = [
             {
                 name: "Beautiful home with backyard oasis",
+                bedrooms: 5,
                 downtownRank: 5,
                 proximityRank: 1,
                 reviewsRank: 4,
@@ -258,6 +267,7 @@
             },
             {
                 name: "Urban Charm - Downtown Kelowna",
+                bedrooms: 5,
                 downtownRank: 1,
                 proximityRank: 4,
                 reviewsRank: 5,
@@ -269,6 +279,7 @@
             },
             {
                 name: "Luxury Townhome in Downtown Kelowna",
+                bedrooms: 5,
                 downtownRank: 2,
                 proximityRank: 3,
                 reviewsRank: 2,
@@ -280,6 +291,7 @@
             },
             {
                 name: "The Luxe Loft",
+                bedrooms: 5,
                 downtownRank: 3,
                 proximityRank: 2,
                 reviewsRank: 1,
@@ -291,6 +303,7 @@
             },
             {
                 name: "Downtown Lakefront Condo",
+                bedrooms: 5,
                 downtownRank: 4,
                 proximityRank: 5,
                 reviewsRank: 3,
@@ -312,7 +325,7 @@
             { name: "The Train Station Pub", type: "restaurant", description: "Classic pub fare in a historic building. Reliable food, good beer selection, and can easily accommodate groups." },
             { name: "Krafty Kitchen + Bar", type: "restaurant", description: "Focus on casual fine dining with a hip-hop theme. Excellent brunch and dinner menus." },
             { name: "Red Bird Brewing", type: "brewery", description: "Features a huge outdoor patio with fire pits and live music. A top spot for a casual afternoon or evening." },
-            { name: "Orchard Room", type: "bar", description: "Stylish cocktail bar with tropical vibes, intricate drinks, and a small plates menu. More of an upscale evening spot." },
+            { name: "Orchard Room", type: "bar", description: "Stylish cocktail bar with tropical vibes and intricate drinks. More of an upscale evening spot." },
         ];
 
 
@@ -326,6 +339,7 @@
                         <a href="${property.url}" target="_blank" class="font-bold text-blue-600 hover:underline">${property.name}</a>
                         <div class="text-sm text-gray-500">${property.reviewScore}</div>
                     </td>
+                    <td class="p-4 text-center">${property.bedrooms}</td>
                     <td class="p-4 text-center">${property.downtownRank}</td>
                     <td class="p-4 text-center">${property.proximityRank}</td>
                     <td class="p-4 text-center">${property.reviewsRank}</td>
