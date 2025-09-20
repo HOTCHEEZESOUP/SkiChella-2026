@@ -1,28 +1,430 @@
+@@ -1,428 +1,427 @@
+<!-- Chosen Palette: Warm Neutrals with Subtle Blue and Green Accents -->
+<!-- Application Structure Plan: The SPA is designed as a single-page interactive report, structured into three thematic sections: a Trip Dashboard for a high-level overview, a Travel section for logistics, and a Food & Drink section for local recommendations. This structure was chosen to guide the user through the planning process logically, from broad decisions (stay vs. travel) to specific details (which Airbnb, which restaurant). The design prioritizes a clean, easily scannable layout using a grid-based approach. The fixed header provides persistent navigation. -->
+<!-- Visualization & Content Choices: Dashboard Section -> Goal: Summarize key trip stats & provide an at-a-glance comparison. Method: Use key metric cards for stats. Interaction: No complex interaction is needed; the goal is clear, concise information transfer. Justification: This provides a quick visual impact and "wow" factor, allowing for rapid comparison of multiple criteria.
+Travel Section -> Goal: Explain pros and cons of travel options. Method: Use descriptive text blocks with bullet points. Interaction: No complex interaction is needed; the goal is clear, concise information transfer. Justification: This format is ideal for direct comparisons of qualitative information.
+Food Section -> Goal: Provide an interactive list of local spots. Method: Use a filterable grid of cards. Interaction: Filter buttons allow users to dynamically change the content of the grid, showing only Restaurants, Bars, or Breweries. Justification: This makes a long list of recommendations easily digestible and user-driven. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkiChella 2026</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover {
+            color: #1e3a8a;
+        }
+        .nav-link.active {
+            color: #1e3a8a;
+            border-bottom-color: #1e3a8a;
+        }
+        .stat-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        a[href^="http"]:not([class*="hover:"]),
+        a[href^="https:"]:not([class*="hover:"]) {
+            text-decoration: underline;
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <h1>Welcome to SkiChella 2026</h1>
+<body class="bg-gray-100">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 md:flex md:justify-between md:items-center">
+            <h1 class="text-3xl font-bold text-blue-800 text-center md:text-left">SkiChella 2026</h1>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6 text-lg">
+                    <li><a href="#dashboard" class="nav-link text-gray-700 font-medium pb-1 border-b-2 border-transparent active">Dashboard</a></li>
+                    <li><a href="#accommodation" class="nav-link text-gray-700 font-medium pb-1 border-b-2 border-transparent">Accommodation</a></li>
+                    <li><a href="#travel" class="nav-link text-gray-700 font-medium pb-1 border-b-2 border-transparent">Travel</a></li>
+                    <li><a href="#food" class="nav-link text-gray-700 font-medium pb-1 border-b-2 border-transparent">Food & Drink</a></li>
+                </ul>
+            </nav>
+             <div class="block md:hidden text-center mt-4">
+                <select id="mobile-nav" class="p-2 border rounded-md">
+                    <option value="#dashboard">Dashboard</option>
+                    <option value="#accommodation">Accommodation</option>
+                    <option value="#travel">Travel</option>
+                    <option value="#food">Food & Drink</option>
+                </select>
+            </div>
+        </div>
     </header>
-    <main>
-        <section>
-            <h2>About the Event</h2>
-            <p>Join us for an unforgettable experience in the heart of the mountains!</p>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="dashboard" class="pt-8 md:pt-16">
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Trip Dashboard</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">An overview of the key planning details for your ski trip to Kelowna and Big White. Use this dashboard to get a quick summary of the options and navigate to detailed sections.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="stat-card text-center">
+                    <p class="text-4xl font-bold text-blue-800">5-7 Guys</p>
+                    <p class="text-gray-600 mt-2">Number in Group</p>
+                </div>
+                <div class="stat-card text-center">
+                    <p class="text-lg md:text-xl font-bold text-blue-800">Jan 14 - 18, 2026</p>
+                    <p class="text-gray-600 mt-2">4 Nights</p>
+                </div>
+                <div class="stat-card text-center">
+                    <p class="text-2xl font-bold text-blue-800">Kelowna, BC</p>
+                    <p class="text-gray-600 mt-2">Home Base</p>
+                </div>
+            </div>
+
+            <div class="mt-12 bg-white p-6 rounded-xl shadow-lg">
+                <h3 class="text-2xl font-bold text-center mb-6">Why Stay in Kelowna? Pros & Cons</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+                        <h4 class="text-xl font-semibold text-green-800 mb-3">Benefits</h4>
+                        <ul class="space-y-2 text-gray-700 list-disc list-inside">
+                            <li>More dining and nightlife options downtown.</li>
+                            <li>Generally more spacious and cost-effective accommodation.</li>
+                            <li>Ability to explore Kelowna and the Okanagan valley.</li>
+                            <li>Grocery and supply shopping is much cheaper.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-red-50 p-6 rounded-lg border border-red-200">
+                        <h4 class="text-xl font-semibold text-red-800 mb-3">Drawbacks</h4>
+                        <ul class="space-y-2 text-gray-700 list-disc list-inside">
+                            <li>Requires daily travel to Big White (~1-hour drive).</li>
+                            <li>Risk of winter driving conditions on the mountain road.</li>
+                            <li>Less "ski-in, ski-out" mountain village atmosphere.</li>
+                            <li>Logistics of getting 7 people to the hill each day.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </section>
-        <section>
-            <h2>Gallery</h2>
-            <img src="01.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full max-w-md rounded-lg shadow-md mb-4">
-            <!-- Other images -->
+
+        <section id="accommodation" class="pt-24">
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Your Accommodation</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">You have decided on the **Downtown Lakefront Penthouse**. Here are the key details for your reservation to keep everyone on the same page.</p>
+
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold text-blue-800">
+                            <a href="https://www.airbnb.ca/rooms/47566614?adults=6&check_in=2026-01-14&check_out=2026-01-18&guests=7&search_mode=regular_search&source_impression_id=p3_1758334023_P3QRHveX8UKVHIBt&previous_page_section_name=1000&federated_search_id=923eb79b-ff93-41f8-836e-3dbc69f106ac" target="_blank">Downtown Lakefront Penthouse</a>
+                        </h3>
+                        <p class="text-gray-700">This condo features four bedrooms and can sleep up to 10 guests. It includes access to a communal pool and a hot tub, and is located in a prime downtown spot.</p>
+
+                        <div class="space-y-2 text-gray-600">
+                            <p><span class="font-semibold text-gray-800">Total Cost:</span> $2,884.75</p>
+                            <p><span class="font-semibold text-gray-800">Cost Per Person:</span> $480.79 (assuming 6 people)</p>
+                            <p><span class="font-semibold text-gray-800">Bedrooms:</span> 4</p>
+                            <p><span class="font-semibold text-gray-800">Guests:</span> 6-10</p>
+                            <p><span class="font-semibold text-gray-800">Address:</span> <a href="https://www.google.com/maps/search/?api=1&query=1088%20Sunset%20Dr,%20Kelowna,%20BC%20V1Y%209W7" target="_blank">1088 Sunset Dr, Kelowna, BC V1Y 9W7</a></p>
+                            <p><span class="font-semibold text-gray-800">Check-in:</span> 4:00 PM</p>
+                            <p><span class="font-semibold text-gray-800">Check-out:</span> 10:00 AM</p>
+                        </div>
+                    </div>
+                     <div class="flex justify-center">
+                        <img src="https://placehold.co/400x300/f8f9fa/34495e?text=Downtown+Lakefront+Condo" alt="A lakefront condo with a pool and hot tub." class="rounded-lg shadow-md max-w-full h-auto">
+                        <img src="https://www.airbnb.ca/rooms/47566614?adults=6&check_in=2026-01-14&check_out=2026-01-18&guests=7&search_mode=regular_search&source_impression_id=p3_1758334023_P3QRHveX8UKVHIBt&previous_page_section_name=1000&federated_search_id=923eb79b-ff93-41f8-836e-3dbc69f106ac" alt="A lakefront condo with a pool and hot tub." class="rounded-lg shadow-md max-w-full h-auto">
+                    </div>
+                </div>
+                <div class="mt-8 text-center">
+                    <h4 class="text-xl font-bold mb-4 text-blue-800">Condo Photos</h4>
+                    <p class="text-gray-600 max-w-lg mx-auto mb-4">You can view photos of the property using the gallery below.</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        <img src="0.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="1.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="2.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="3.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="4.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="5.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="6.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="7.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="8.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="9.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="10.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="11.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="12.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                        <img src="13.avif" alt="Photo of the Downtown Lakefront Penthouse" class="w-full h-auto object-cover rounded-lg shadow-md">
+                    </div>
+                </div>
+            </div>
         </section>
+
+        <section id="travel" class="pt-24">
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Transportation & Logistics</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Here's a breakdown of your vehicle rental details and flight options, along with a summary of the main options for getting to Big White from Kelowna.</p>
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg">
+                <h3 class="text-2xl font-bold text-center mb-8">Vehicle Rental Details</h3>
+                <div class="flex flex-col md:flex-row items-center md:justify-around text-center md:text-left mb-8">
+                    <div class="mb-4 md:mb-0 md:mr-8">
+                        <img src="tahoe.jpg" alt="A Chevrolet Tahoe or similar SUV" class="w-64 h-auto md:w-80 md:h-auto object-contain rounded-lg shadow-md">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 md:grid-cols-1 md:gap-y-2">
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">Passengers</h4>
+                            <p class="text-gray-600">7 Passengers</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">Pick-up</h4>
+                            <p class="text-gray-600">Jan 14, 2026 @ 12:00 PM</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">Drop-off</h4>
+                            <p class="text-gray-600">Jan 18, 2026 @ 12:00 PM</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">Location</h4>
+                            <p class="text-gray-600">11-5533 Airport Way, Kelowna</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">Cost</h4>
+                            <p class="text-gray-600">$695 for the week</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">Cost (per person)</h4>
+                            <p class="text-gray-600">$115.83 (assuming 6 people)</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800">Confirmation No.</h4>
+                            <p class="text-gray-600">Enterprise Rent-A-Car CA85464****</p>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-6 border-t border-gray-200">
+                <h3 class="text-2xl font-bold text-center mb-8">Flight Options</h3>
+                <div class="bg-red-50 p-4 rounded-md mb-8">
+                    <p class="text-center text-sm font-semibold text-red-700">Please note: The flight costs provided are based on typical historical data and may not reflect current, real-time prices. Flight times are estimates. Always check the airline's website for the most accurate and up-to-date information.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4 text-blue-800">🛫 From Calgary (YYC)</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <h5 class="font-semibold">WestJet Direct Flight</h5>
+                                <p class="text-gray-600">Cheapest round-trip cost: <span class="font-bold">~$142 CAD</span></p>
+                                <p class="text-gray-600">**Outbound:** Morning departure on Jan 14, 2026. <br> **Return:** Afternoon departure on Jan 18, 2026.</p>
+                                <p class="text-gray-600 italic">Direct flights are widely available and take approximately 1 hour and 17 minutes.</p>
+                                <a href="https://www.westjet.com/en-ca/flights/calgary-to-kelowna" target="_blank">Search WestJet for Flights</a>
+                            </div>
+                            <div class="border-t pt-4">
+                                <h5 class="font-semibold">Air Canada Direct Flight</h5>
+                                <p class="text-gray-600">Cheapest round-trip cost: <span class="font-bold">~$192 CAD</span></p>
+                                <p class="text-gray-600">**Outbound:** Morning departure on Jan 14, 2026. <br> **Return:** Afternoon departure on Jan 18, 2026.</p>
+                                <p class="text-gray-600 italic">Direct flights are widely available and take approximately 1 hour and 15 minutes.</p>
+                                <a href="https://www.aircanada.com/en-ca/flights-from-calgary-to-kelowna" target="_blank">Search Air Canada for Flights</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4 text-blue-800">✈️ From Toronto (YYZ)</h4>
+                         <div class="space-y-4">
+                            <div>
+                                <h5 class="font-semibold">WestJet Direct Flight</h5>
+                                <p class="text-gray-600">Cheapest round-trip cost: <span class="font-bold">~$260 CAD</span></p>
+                                <p class="text-gray-600">**Outbound:** Afternoon departure on Jan 14, 2026. <br> **Return:** Afternoon departure on Jan 18, 2026.</p>
+                                <p class="text-gray-600 italic">Direct flights are available and take approximately 4 hours and 45 minutes.</p>
+                                <a href="https://www.westjet.com/en-ca/flights/toronto-to-kelowna" target="_blank">Search WestJet for Flights</a>
+                            </div>
+                            <div class="border-t pt-4">
+                                <h5 class="font-semibold">Air Canada Direct Flight</h5>
+                                <p class="text-gray-600">Cheapest round-trip cost: <span class="font-bold">~$295 CAD</span></p>
+                                <p class="text-gray-600">**Outbound:** Afternoon departure on Jan 14, 2026. <br> **Return:** Afternoon departure on Jan 18, 2026.</p>
+                                <p class="text-gray-600 italic">Direct flights are available and take approximately 4 hours and 45 minutes.</p>
+                                <a href="https://www.aircanada.com/en-ca/flights/toronto-to-kelowna" target="_blank">Search Air Canada for Flights</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-6 border-t border-gray-200">
+                <h3 class="text-2xl font-bold text-center mb-8">Kelowna to Big White: Drive vs. Shuttle</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4 text-blue-800">🚗 Driving (Rental/Personal)</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <h5 class="font-semibold">Summary:</h5>
+                                <p class="text-gray-600">Driving offers the most flexibility. The trip takes approximately 1 hour each way (60 km). A 4WD or AWD vehicle with winter tires is highly recommended as the road conditions can be challenging.</p>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-green-700">Pros:</h5>
+                                <ul class="list-disc list-inside text-gray-600">
+                                    <li>Complete control over your schedule.</li>
+                                    <li>Ability to bring all your gear easily.</li>
+                                    <li>Can stop for supplies on the way back.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-red-700">Cons:</h5>
+                                <ul class="list-disc list-inside text-gray-600">
+                                    <li>Requires a designated driver.</li>
+                                    <li>Fuel and potential rental costs.</li>
+                                    <li>Navigating winter mountain roads.</li>
+                                    <li>Parking at Big White can be limited.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4 text-blue-800">🚌 Big White Shuttle</h4>
+                         <div class="space-y-4">
+                            <div>
+                                <h5 class="font-semibold">Summary:</h5>
+                                <p class="text-gray-600">Multiple shuttle services run daily routes between Kelowna and Big White. It's a convenient, stress-free option that drops you right at the village centre. Booking in advance is essential.</p>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-green-700">Pros:</h5>
+                                <ul class="list-disc list-inside text-gray-600">
+                                    <li>No need to worry about winter driving.</li>
+                                    <li>Everyone in the group can relax.</li>
+                                    <li>No parking hassles at the resort.</li>
+                                    <li>Direct drop-off at the main village.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-red-700">Cons:</h5>
+                                <ul class="list-disc list-inside text-gray-600">
+                                    <li>Fixed departure and return times.</li>
+                                    <li>Can be costly for a large group.</li>
+                                    <li>Less flexibility for off-schedule activities.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="mt-8 pt-8 border-t">
+                    <h4 class="text-xl font-semibold mb-4 text-center text-blue-800">Common Shuttle Pickup Locations</h4>
+                    <ul class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-gray-700">
+                        <li class="bg-gray-100 p-3 rounded-md">Kelowna Int'l Airport (YLW)</li>
+                        <li class="bg-gray-100 p-3 rounded-md">Major Downtown Hotels</li>
+                        <li class="bg-gray-100 p-3 rounded-md">Orchard Park Mall</li>
+                        <li class="bg-gray-100 p-3 rounded-md">West Kelowna Hubs</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="food" class="pt-24">
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Kelowna: Restaurants & Bars</h2>
+             <p class="text-center text-gray-600 max-w-2xl mx-auto mb-8">Kelowna's downtown and surrounding areas offer a great selection of spots for a post-ski meal or a night out. Here are some top recommendations for a group.</p>
+            <div class="flex justify-center flex-wrap gap-2 mb-8">
+                <button class="filter-btn active bg-blue-700 text-white py-2 px-4 rounded-full" data-filter="all">All</button>
+                <button class="filter-btn bg-white text-gray-700 py-2 px-4 rounded-full border" data-filter="restaurant">Restaurants</button>
+                <button class="filter-btn bg-white text-gray-700 py-2 px-4 rounded-full border" data-filter="brewery">Breweries</button>
+                <button class="filter-btn bg-white text-gray-700 py-2 px-4 rounded-full border" data-filter="bar">Bars</button>
+                <button class="filter-btn bg-white text-gray-700 py-2 px-4 rounded-full border" data-filter="dancing-entertainers">Dancing Entertainers</button>
+            </div>
+            <div id="food-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
+        </section>
+
     </main>
-    <footer>
-        <p>&copy; 2026 SkiChella. All rights reserved.</p>
+    <footer class="bg-white mt-16 border-t">
+        <div class="container mx-auto px-6 py-4 text-center text-gray-500">
+            <p>&copy; 2025 Trip Planning Inc. | Report generated for collaborative decision-making.</p>
+        </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+        const foodData = [
+            { name: "RauDZ Regional Table", type: "restaurant", description: "Upscale farm-to-table dining. A bit pricey but fantastic food and cocktails. Great for a celebratory dinner.", url: "https://www.raudz.com/" },
+            { name: "BNA Brewing Co. & Eatery", type: "brewery", description: "Massive, lively brewery with an attached bowling alley. Great beer, solid food menu, and a fun atmosphere for a large group.", url: "https://www.bnabrewing.com/" },
+            { name: "Micro Bar & Bites", type: "bar", description: "Tiny, popular tapas bar with Spanish-inspired dishes and great cocktails. Might be tight for 7, but worth it.", url: "https://microkelowna.com/" },
+            { name: "Liquid Zoo", type: "dancing-entertainers", description: "A popular nightclub and bar with live entertainment and DJs. A late-night option for the group.", url: "https://theliquidzoo.com/" },
+            { name: "Central Kitchen + Bar", type: "restaurant", description: "Modern, bustling spot with a diverse menu of elevated comfort food. Good for groups, takes reservations.", url: "https://centralkelowna.com/" },
+            { name: "Kettle River Brewing Co.", type: "brewery", description: "Smaller, more relaxed brewery with a focus on creative beers. Often has a food truck on-site.", url: "https://www.kettleriverbrewing.ca/" },
+            { name: "The Train Station Pub", type: "restaurant", description: "Classic pub fare in a historic building. Reliable food, good beer selection, and can easily accommodate groups.", url: "https://thetrainstationpub.com/" },
+            { name: "Krafty Kitchen + Bar", type: "restaurant", description: "Focus on casual fine dining with a hip-hop theme. Excellent brunch and dinner menus.", url: "https://www.kraftykitchen.ca/" },
+            { name: "Red Bird Brewing", type: "brewery", description: "Features a huge outdoor patio with fire pits and live music. A top spot for a casual afternoon or evening.", url: "https://www.redbirdbrewing.com/" },
+            { name: "Orchard Room", type: "bar", description: "Stylish cocktail bar with tropical vibes and intricate drinks. More of an upscale evening spot.", url: "https://www.orchardroom.ca/" },
+            { name: "Cactus Club Cafe", type: "restaurant", description: "A well-known Canadian chain offering a diverse menu, from burgers to fine dining. Great for a consistent, crowd-pleasing meal.", url: "https://www.cactusclubcafe.com/" },
+            { name: "King Taps", type: "restaurant", description: "A vibrant restaurant with a huge selection of beer taps and a varied food menu, from pizza to steak. Lively and great for groups.", url: "https://www.kingtaps.com/" }
+        ];
+
+        function populateFoodGrid(filter = 'all') {
+            const grid = document.getElementById('food-grid');
+            grid.innerHTML = '';
+            const filteredData = filter === 'all' ? foodData : foodData.filter(item => item.type === filter);
+
+            filteredData.forEach(item => {
+                const card = document.createElement('div');
+                let typeColor = '';
+                switch(item.type) {
+                    case 'restaurant': typeColor = 'bg-green-100 text-green-800'; break;
+                    case 'brewery': typeColor = 'bg-yellow-100 text-yellow-800'; break;
+                    case 'bar': typeColor = 'bg-purple-100 text-purple-800'; break;
+                    case 'dancing-entertainers': typeColor = 'bg-red-100 text-red-800'; break;
+                }
+
+                card.className = 'food-card bg-white p-6 rounded-xl shadow-lg transition-transform transform hover:-translate-y-1';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <h4 class="text-xl font-bold mb-2">
+                            <a href="${item.url}" target="_blank">${item.name}</a>
+                        </h4>
+                        <span class="text-xs font-semibold px-2 py-1 rounded-full ${typeColor}">${item.type.charAt(0).toUpperCase() + item.type.slice(1).replace('-', ' ')}</span>
+                    </div>
+                    <p class="text-gray-600">${item.description}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active', 'bg-blue-700', 'text-white');
+                    btn.classList.add('bg-white', 'text-gray-700');
+                });
+                button.classList.add('active', 'bg-blue-700', 'text-white');
+                button.classList.remove('bg-white', 'text-gray-700');
+                populateFoodGrid(button.dataset.filter);
+            });
+        });
+
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('main section');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        document.getElementById('mobile-nav').addEventListener('change', function() {
+            window.location.hash = this.value;
+        });
+
+        populateFoodGrid();
+    });
+    </script>
 </body>
 </html>
